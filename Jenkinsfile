@@ -32,5 +32,17 @@ pipeline {
                 }
             }
         }
+        stage('stage05- modify the pod.yaml file') {
+            steps {
+                sh """
+                    sed -i "s|\\\${IMAGE_TAG}|${IMAGE_TAG}|g" pod.yaml
+                """
+            }
+        }
+        stage('stage06-Run the kubernetes deployment') {
+            steps {
+                sh 'kubectl apply -f pod.yaml'
+            }
+        }
     }
 }
