@@ -20,12 +20,12 @@ pipeline {
                 sh 'docker build -t amitkumar0441/cloudchampmonitoring_app:${IMAGE_TAG} .'
             }
         }
-        stage('stage 04 - push image to dockerhub') {
+        stage('stage04 - push image to dockerhub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockercredentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push amitkumar0441/cloudchampmonitoring_app${IMAGE_TAG}
+                        docker push amitkumar0441/cloudchampmonitoring_app:${IMAGE_TAG}
                         docker rmi amitkumar0441/cloudchampmonitoring_app:${IMAGE_TAG}
                         docker logout
                     '''
